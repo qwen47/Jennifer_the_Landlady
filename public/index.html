@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chat with Jennifer</title>
+  <style>
+    body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+    #chat { max-width: 600px; margin: auto; background: white; padding: 10px; border-radius: 10px; }
+    .msg { padding: 8px; margin: 5px 0; border-radius: 8px; }
+    .user { background: #d1e7ff; text-align: right; }
+    .bot { background: #e2e2e2; text-align: left; }
+  </style>
+</head>
+<body>
+  <div id="chat"></div>
+  <input id="message" type="text" placeholder="Say something..." style="width:80%;">
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    async function sendMessage() {
+      const msg = document.getElementById("message").value;
+      if (!msg) return;
+      addMessage(msg, "user");
+      document.getElementById("message").value = "";
+
+      const res = await fetch("YOUR_BACKEND_URL/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg })
+      });
+      const data = await res.json();
+      addMessage(data.reply, "bot");
+    }
+
+    function addMessage(text, sender) {
+      const div = document.createElement("div");
+      div.className = "msg " + sender;
+      div.textContent = text;
+      document.getElementById("chat").appendChild(div);
+    }
+  </script>
+</body>
+</html>
+
