@@ -24,11 +24,7 @@
       document.getElementById("message").value = "";
 <img src="./jennifer.png" alt="Jennifer the Landlady" style="max-width:300px;" />
 
-      const res = await fetch("YOUR_BACKEND_URL/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: msg })
-      });
+      const res = await fetch(fetch("https://jennifer-the-landlady.up.railway.app/chat", { ... })
       const data = await res.json();
       addMessage(data.reply, "bot");
     }
